@@ -9,6 +9,7 @@ export class StartCommand extends Command {
 
   handle() {
     this.bot.start((ctx) => {
+      ctx.session.isStarted = true;
       ctx.reply('Начало работы');
     });
   }
