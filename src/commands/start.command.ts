@@ -41,7 +41,8 @@ export class StartCommand extends Command {
       );
 
       const timer = setInterval(() => {
-        ctx.editMessageText(
+        ctx.deleteMessage();
+        ctx.reply(
           `
           Помидорка Закончилась! 
           \nСделайте перерыв 5-10 минут. 
@@ -51,8 +52,7 @@ export class StartCommand extends Command {
             Markup.button.callback('Начать следующую помидорку', 'start_timer'),
           ])
         );
-        this.timerId = null;
-        clearInterval(timer);
+        this.clearTimer();
       }, 3000);
 
       this.timerId = timer[Symbol.toPrimitive]();
