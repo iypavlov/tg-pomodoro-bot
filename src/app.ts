@@ -8,6 +8,7 @@ import LocalSession from 'telegraf-session-local';
 import { Action } from './actions/action.class';
 import { StartTimerAction } from './actions/startTimer.action';
 import { StopTimerAction } from './actions/stopTimer.action';
+import { HelpCommand } from './commands/help.command';
 
 class Bot {
   private readonly bot: Telegraf<IBotContext>;
@@ -18,7 +19,7 @@ class Bot {
     this.bot = new Telegraf<IBotContext>(this.configService.get('TOKEN'));
     this.bot.use(new LocalSession({ database: 'sessions.json' }).middleware());
 
-    this.commands = [new StartCommand(this.bot)];
+    this.commands = [new StartCommand(this.bot), new HelpCommand(this.bot)];
     this.actions = [
       new StartTimerAction(this.bot),
       new StopTimerAction(this.bot),
