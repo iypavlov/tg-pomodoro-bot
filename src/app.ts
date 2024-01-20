@@ -11,26 +11,27 @@ import { StopTimerAction } from './actions/stopTimer.action';
 
 class Bot {
   private readonly bot: Telegraf<IBotContext>;
-  private commands: Command[] = [];
-  private actions: Action[] = [];
+  private readonly commands: Command[] = [];
+  private readonly actions: Action[] = [];
 
   constructor(private readonly configService: IConfigService) {
     this.bot = new Telegraf<IBotContext>(this.configService.get('TOKEN'));
     this.bot.use(new LocalSession({ database: 'sessions.json' }).middleware());
-  }
 
-  init() {
     this.commands = [new StartCommand(this.bot)];
-    for (const command of this.commands) {
-      command.handle();
-    }
-
     this.actions = [
       new StartTimerAction(this.bot),
       new StopTimerAction(this.bot),
     ];
-    for (const actions of this.actions) {
-      actions.handle();
+  }
+
+  init() {
+    for (const command of this.commands) {
+      command.handle();
+    }
+
+    for (const action of this.actions) {
+      action.handle();
     }
 
     this.bot.launch();
