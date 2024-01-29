@@ -1,6 +1,7 @@
 import { Command } from './command.class';
 import { Markup, Telegraf } from 'telegraf';
 import { IBotContext } from '../context/context.interface';
+import { DEFAULT_COMPLETED_TIMERS } from '../constants';
 
 export class StartCommand extends Command {
   constructor(protected bot: Telegraf<IBotContext>) {
@@ -10,6 +11,8 @@ export class StartCommand extends Command {
   handle() {
     this.bot.start((ctx) => {
       ctx.session.isStarted = true;
+      ctx.session.completedTimersCounter = DEFAULT_COMPLETED_TIMERS;
+
       ctx.reply(
         `
         🤖 

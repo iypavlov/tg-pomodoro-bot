@@ -1,0 +1,2 @@
+export const DEFAULT_COMPLETED_TIMERS = 0;
+export const MAX_COMPLETED_TIMERS = 4;
