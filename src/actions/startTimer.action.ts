@@ -29,10 +29,10 @@ export class StartTimerAction extends Action {
         ])
       );
 
-      this.timer.start(ctx.session, () => {
+      this.timer.start(ctx.session, ({ isMaxCompletedTimers }) => {
         ctx.deleteMessage();
 
-        if (this.timer.getIsMaxCompletedTimers(ctx.session)) {
+        if (isMaxCompletedTimers) {
           ctx.reply(
             `
           🤖 
