@@ -18,6 +18,10 @@ class Bot {
   constructor(private readonly configService: IConfigService) {
     this.bot = new Telegraf<IBotContext>(this.configService.get('TOKEN'));
     this.bot.use(new LocalSession({ database: 'sessions.json' }).middleware());
+    this.bot.catch((err) => {
+      console.error(`Error: ${err}`);
+      process.exit(1);
+    });
 
     this.commands = [new StartCommand(this.bot), new HelpCommand(this.bot)];
     this.actions = [
