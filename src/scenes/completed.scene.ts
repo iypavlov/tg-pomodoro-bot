@@ -13,7 +13,7 @@ export class CompletedScene extends Scene {
     this.scene.enter(async (ctx) => {
       await ctx.deleteMessage();
 
-      if (ctx.session.isMaxCompletedTimers) {
+      if (ctx.session.isLongBreak) {
         await ctx.reply(
           `
           🤖 

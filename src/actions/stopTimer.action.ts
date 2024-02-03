@@ -15,6 +15,8 @@ export class StopTimerAction extends Action {
   handle() {
     this.bot.action('stop_timer', (ctx) => {
       this.timer.clear(ctx.session);
+      ctx.session.interruptedTimersCounter++;
+
       ctx.scene.enter(SCENE_ID_MAP.stop);
     });
   }

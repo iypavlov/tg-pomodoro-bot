@@ -1,6 +1,6 @@
 import { Markup, Scenes } from 'telegraf';
 import { IBotContext } from '../context/context.interface';
-import { DEFAULT_COMPLETED_TIMERS, SCENE_ID_MAP } from '../constants';
+import { SCENE_ID_MAP } from '../constants';
 import { Scene } from './scene.class';
 
 export class StartScene extends Scene {
@@ -10,10 +10,6 @@ export class StartScene extends Scene {
 
   handle() {
     this.scene.enter(async (ctx) => {
-      ctx.session.isStarted = true;
-      ctx.session.timerId = null;
-      ctx.session.completedTimersCounter = DEFAULT_COMPLETED_TIMERS;
-
       await ctx.reply(
         `
         🤖 

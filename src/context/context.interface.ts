@@ -1,10 +1,11 @@
 import { Context, Scenes } from 'telegraf';
 
 export interface SessionData extends Scenes.SceneSession {
-  isStarted: boolean;
   timerId: number | null;
-  isMaxCompletedTimers: boolean;
+  isLongBreak: boolean;
+  currentTimerCounter: number;
   completedTimersCounter: number;
+  interruptedTimersCounter: number;
 }
 
 export interface IBotContext extends Context {
