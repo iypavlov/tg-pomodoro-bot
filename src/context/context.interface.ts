@@ -1,11 +1,6 @@
 import { Context, Scenes } from 'telegraf';
-import { SceneSessionData } from 'telegraf/typings/scenes';
 
-interface SessionTest extends SceneSessionData {
-  test: boolean;
-}
-
-export interface SessionData extends Scenes.SceneSession<SessionTest> {
+export interface SessionData extends Scenes.SceneSession {
   isStarted: boolean;
   timerId: number | null;
   isMaxCompletedTimers: boolean;
@@ -14,5 +9,5 @@ export interface SessionData extends Scenes.SceneSession<SessionTest> {
 
 export interface IBotContext extends Context {
   session: SessionData;
-  scene: Scenes.SceneContextScene<IBotContext, SessionTest>;
+  scene: Scenes.SceneContextScene<IBotContext>;
 }
