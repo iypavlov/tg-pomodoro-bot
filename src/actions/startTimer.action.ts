@@ -1,16 +1,20 @@
 import { Action } from './action.class';
 import { Markup, Telegraf } from 'telegraf';
 import { IBotContext, SessionData } from '../context/context.interface';
-import { DEFAULT_COMPLETED_TIMERS, MAX_COMPLETED_TIMERS } from '../constants';
+import { MAX_COMPLETED_TIMERS } from '../constants';
+import { Timer } from '../common/timer';
 
 export class StartTimerAction extends Action {
+  private timer: Timer;
+
   constructor(protected bot: Telegraf<IBotContext>) {
     super(bot);
+    this.timer = Timer.getInstance();
   }
 
   handle() {
     this.bot.action('start_timer', (ctx) => {
-      this.clearTimer(ctx.session);
+      this.timer.clear(ctx.session);
 
       ctx.editMessageText(
         `
@@ -25,15 +29,10 @@ export class StartTimerAction extends Action {
         ])
       );
 
-      const timer = setTimeout(() => {
-        ctx.session.completedTimersCounter++;
-
-        const isMaxCompletedTimers =
-          ctx.session.completedTimersCounter >= MAX_COMPLETED_TIMERS;
-
+      this.timer.start(ctx.session, () => {
         ctx.deleteMessage();
 
-        if (isMaxCompletedTimers) {
+        if (this.timer.getIsMaxCompletedTimers(ctx.session)) {
           ctx.reply(
             `
           🤖 
@@ -66,25 +65,10 @@ export class StartTimerAction extends Action {
             ])
           );
         }
-
-        if (isMaxCompletedTimers)
-          ctx.session.completedTimersCounter = DEFAULT_COMPLETED_TIMERS;
-
-        this.clearTimer(ctx.session);
-      }, 3000); // TODO: Заменить на 25мин.
-
-      ctx.session.timerId = timer[Symbol.toPrimitive]();
+      });
     });
   }
 
   private getCounterRow = (session: SessionData) =>
     `\n ${session.completedTimersCounter} / ${MAX_COMPLETED_TIMERS} 🍅`;
-
-  private clearTimer(session: SessionData) {
-    if (session.timerId) {
-      clearInterval(session.timerId);
-    }
-
-    session.timerId = null;
-  }
 }

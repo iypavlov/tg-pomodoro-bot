@@ -1,18 +1,19 @@
 import { Action } from './action.class';
 import { Markup, Telegraf } from 'telegraf';
 import { IBotContext } from '../context/context.interface';
+import { Timer } from '../common/timer';
 
 export class StopTimerAction extends Action {
+  private timer: Timer;
+
   constructor(protected bot: Telegraf<IBotContext>) {
     super(bot);
+    this.timer = Timer.getInstance();
   }
 
   handle() {
     this.bot.action('stop_timer', (ctx) => {
-      if (ctx.session.timerId) {
-        clearInterval(ctx.session.timerId);
-      }
-      ctx.session.timerId = null;
+      this.timer.clear(ctx.session);
 
       ctx.editMessageText(
         `
