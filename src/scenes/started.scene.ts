@@ -1,6 +1,6 @@
 import { Markup, Scenes } from 'telegraf';
 import { IBotContext } from '../context/context.interface';
-import { SCENE_ID_MAP } from '../constants';
+import { BUTTONS, SCENE_ID_MAP } from '../constants';
 import { Scene } from './scene.class';
 import { getCurrentTimerCounterRow } from '../utils';
 
@@ -20,9 +20,7 @@ export class StartedScene extends Scene {
         \n Через 25 минут я напомню вам сделать перерыв.
         ${getCurrentTimerCounterRow(ctx.session)}
         `,
-          Markup.inlineKeyboard([
-            Markup.button.callback('Прервать помидорку ⏹', 'stop_timer'),
-          ])
+          Markup.inlineKeyboard([BUTTONS.stop])
         );
       } catch (e) {
         console.log(e);

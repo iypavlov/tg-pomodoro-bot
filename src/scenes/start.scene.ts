@@ -1,6 +1,6 @@
 import { Markup, Scenes } from 'telegraf';
 import { IBotContext } from '../context/context.interface';
-import { SCENE_ID_MAP } from '../constants';
+import { DEFAULT_CURRENT_TIMER_COUNTER, SCENE_ID_MAP } from '../constants';
 import { Scene } from './scene.class';
 
 export class StartScene extends Scene {
@@ -10,6 +10,10 @@ export class StartScene extends Scene {
 
   handle() {
     this.scene.enter(async (ctx) => {
+      ctx.session.timerId = null;
+      ctx.session.currentTimerCounter = DEFAULT_CURRENT_TIMER_COUNTER;
+      ctx.session.isLongBreak = false;
+
       try {
         await ctx.reply(
           `
