@@ -6,9 +6,9 @@ import { IBotContext } from './context/context.interface';
 import { Command } from './commands/command.class';
 import { Action } from './actions/action.class';
 import { Scene } from './scenes/scene.class';
-import { commands } from './commands';
-import { actions } from './actions';
-import { scenes } from './scenes';
+import commands from './commands';
+import actions from './actions';
+import scenes from './scenes';
 
 class Bot {
   private readonly bot: Telegraf<IBotContext>;
