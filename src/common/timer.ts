@@ -12,19 +12,16 @@ export class Timer {
     return this.instance;
   }
 
-  start(
-    session: SessionData,
-    callback: (params: { isMaxCompletedTimers: boolean }) => void
-  ) {
+  start(session: SessionData, callback: () => void) {
     const timer = setTimeout(() => {
       session.completedTimersCounter++;
 
-      const isMaxCompletedTimers =
+      session.isMaxCompletedTimers =
         session.completedTimersCounter >= MAX_COMPLETED_TIMERS;
 
-      callback({ isMaxCompletedTimers });
+      callback();
 
-      if (isMaxCompletedTimers) {
+      if (session.isMaxCompletedTimers) {
         session.completedTimersCounter = DEFAULT_COMPLETED_TIMERS;
       }
 
