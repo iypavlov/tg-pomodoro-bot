@@ -1,7 +1,8 @@
 import { Action } from './action.class';
-import { Markup, Telegraf } from 'telegraf';
+import { Telegraf } from 'telegraf';
 import { IBotContext } from '../context/context.interface';
 import { Timer } from '../common/timer';
+import { SCENE_ID_MAP } from '../constants';
 
 export class StopTimerAction extends Action {
   private timer: Timer;
@@ -14,17 +15,9 @@ export class StopTimerAction extends Action {
   handle() {
     this.bot.action('stop_timer', (ctx) => {
       this.timer.clear(ctx.session);
+      ctx.session.interruptedTimersCounter++;
 
-      ctx.editMessageText(
-        `
-        🤖
-        \n Вы прервали помидорку!
-        \n Нажмите "Начать помидорку" для запуска новой.
-        `,
-        Markup.inlineKeyboard([
-          Markup.button.callback('Начать помидорку 🍅', 'start_timer'),
-        ])
-      );
+      ctx.scene.enter(SCENE_ID_MAP.stop);
     });
   }
 }
