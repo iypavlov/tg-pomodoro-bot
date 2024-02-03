@@ -10,8 +10,9 @@ export class HelpScene extends Scene {
 
   handle() {
     this.scene.enter(async (ctx) => {
-      await ctx.reply(
-        `
+      try {
+        await ctx.reply(
+          `
         ℹ
         \n «Метод помидора» — техника управления временем, предложенная Франческо Чирилло в конце 1980. 
         \n Методика предполагает увеличение эффективности работы при меньших временных затратах за счёт глубокой концентрации и коротких перерывов. 
@@ -20,7 +21,10 @@ export class HelpScene extends Scene {
         \n /start - Начать работать с ботом
         \n /help - Дополнительная информация
         `
-      );
+        );
+      } catch (e) {
+        console.log(e);
+      }
     });
   }
 }

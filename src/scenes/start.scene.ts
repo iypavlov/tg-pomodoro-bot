@@ -10,8 +10,9 @@ export class StartScene extends Scene {
 
   handle() {
     this.scene.enter(async (ctx) => {
-      await ctx.reply(
-        `
+      try {
+        await ctx.reply(
+          `
         🤖 
         \nПривет! Я бот помидорка, ваш помощник в продуктивной работе! 
         \n Начнем❔
@@ -26,10 +27,13 @@ export class StartScene extends Scene {
          \n 🔵 Не прерывайте помидорку.
          \n 🔵 Если задача занимает меньше одной помидорки, попробуйте скомбинировать несколько мелких задач.
         `,
-        Markup.inlineKeyboard([
-          Markup.button.callback('Начать помидорку 🍅', 'start_timer'),
-        ])
-      );
+          Markup.inlineKeyboard([
+            Markup.button.callback('Начать помидорку 🍅', 'start_timer'),
+          ])
+        );
+      } catch (e) {
+        console.log(e);
+      }
     });
   }
 }

@@ -11,18 +11,22 @@ export class StartedScene extends Scene {
 
   handle() {
     this.scene.enter(async (ctx) => {
-      await ctx.editMessageText(
-        `
+      try {
+        await ctx.editMessageText(
+          `
         🤖 
         \n Помидорка началась! 
         \n Переключите все внимание на решение вашей задачи.
         \n Через 25 минут я напомню вам сделать перерыв.
         ${getCurrentTimerCounterRow(ctx.session)}
         `,
-        Markup.inlineKeyboard([
-          Markup.button.callback('Прервать помидорку ⏹', 'stop_timer'),
-        ])
-      );
+          Markup.inlineKeyboard([
+            Markup.button.callback('Прервать помидорку ⏹', 'stop_timer'),
+          ])
+        );
+      } catch (e) {
+        console.log(e);
+      }
     });
   }
 }

@@ -10,16 +10,20 @@ export class StopScene extends Scene {
 
   handle() {
     this.scene.enter(async (ctx) => {
-      await ctx.editMessageText(
-        `
+      try {
+        await ctx.editMessageText(
+          `
         🤖
         \n Вы прервали помидорку!
         \n Нажмите "Начать помидорку" для запуска новой.
         `,
-        Markup.inlineKeyboard([
-          Markup.button.callback('Начать помидорку 🍅', 'start_timer'),
-        ])
-      );
+          Markup.inlineKeyboard([
+            Markup.button.callback('Начать помидорку 🍅', 'start_timer'),
+          ])
+        );
+      } catch (e) {
+        console.log(e);
+      }
     });
   }
 }

@@ -25,14 +25,15 @@ class Bot {
 
   init() {
     this.bot.use(new LocalSession({ database: 'sessions.json' }).middleware());
+
     this.bot.use(
       new Scenes.Stage<IBotContext>(
         this.scenes.map((scene) => scene.getSceneInstance())
       ).middleware()
     );
+
     this.bot.catch((err) => {
       console.error(`Error: ${err}`);
-      process.exit(1);
     });
 
     for (const command of this.commands) {
