@@ -6,6 +6,7 @@ import {
 
 export class Timer {
   private static instance: Timer;
+
   private constructor() {}
 
   static getInstance() {
@@ -30,7 +31,7 @@ export class Timer {
       }
 
       this.clear(session);
-    }, 3000); // TODO: Заменить на 25мин.
+    }, 1500000);
     session.timerId = timer[Symbol.toPrimitive]();
   }
 
